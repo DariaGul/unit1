@@ -33,7 +33,8 @@ public class Notepad {
      */
     public String delete(String deletedText) {
         Optional<NotepadEntry> needEntry = Arrays.stream(entries)
-            .filter(current -> current.getEntry().equals(deletedText))
+            .filter(Objects::nonNull)
+            .filter(current -> deletedText.equals(current.getEntry()))
             .findFirst();
 
         if (needEntry.isPresent()) {
