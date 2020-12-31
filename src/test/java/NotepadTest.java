@@ -1,9 +1,10 @@
-import java.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import task6.Notepad;
 import task6.NotepadEntry;
+
+import java.util.Arrays;
 
 public class NotepadTest {
 
@@ -22,9 +23,9 @@ public class NotepadTest {
     public void whenShowAllEntriesThenReturnNotepadEntryTest() {
         NotepadEntry[] entries = notepad.showAllEntries();
         NotepadEntry[] needArray = {
-            new NotepadEntry(FIRST),
-            new NotepadEntry("second"),
-            new NotepadEntry("third"),
+                new NotepadEntry(FIRST),
+                new NotepadEntry("second"),
+                new NotepadEntry("third"),
         };
         Assertions.assertArrayEquals(needArray, entries);
     }
@@ -46,7 +47,7 @@ public class NotepadTest {
         NotepadEntry[] afterDelete = notepad.showAllEntries();
         Assertions.assertNotEquals(beforeDelete, afterDelete.length);
         Arrays.stream(afterDelete)
-            .forEach(c -> Assertions.assertNotEquals(FIRST, c.getEntry()));
+                .forEach(c -> Assertions.assertNotEquals(FIRST, c.getEntry()));
     }
 
     @Test
@@ -59,8 +60,8 @@ public class NotepadTest {
         Assertions.assertNotEquals(beforeAdd, afterAdd.length);
 
         long count = Arrays.stream(afterAdd)
-            .filter(c -> entryForAdd.equals(c.getEntry()))
-            .count();
+                .filter(c -> entryForAdd.equals(c.getEntry()))
+                .count();
         Assertions.assertEquals(count, 1);
     }
 
@@ -72,8 +73,8 @@ public class NotepadTest {
         NotepadEntry[] afterAdd = notepad.showAllEntries();
         Assertions.assertNotEquals(beforeAdd, afterAdd.length);
         long count = Arrays.stream(afterAdd)
-            .filter(c -> FIRST.equals(c.getEntry()))
-            .count();
+                .filter(c -> FIRST.equals(c.getEntry()))
+                .count();
         Assertions.assertEquals(count, 2);
     }
 
@@ -83,8 +84,12 @@ public class NotepadTest {
         String message = notepad.edit(FIRST, newEntry);
         Assertions.assertEquals("entry changed", message);
         NotepadEntry[] afterEdit = notepad.showAllEntries();
+        long countNewEntry = Arrays.stream(afterEdit)
+                .filter(c -> newEntry.equals(c.getEntry()))
+                .count();
+        Assertions.assertEquals(countNewEntry, 1);
         Arrays.stream(afterEdit)
-            .forEach(c -> Assertions.assertNotEquals(FIRST, c.getEntry()));
+                .forEach(c -> Assertions.assertNotEquals(FIRST, c.getEntry()));
     }
 
     @Test
